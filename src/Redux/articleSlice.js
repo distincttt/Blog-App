@@ -109,8 +109,11 @@ const articleSlice = createAppSlice({
           )
       },
       {
-        fulfilled: (state) => {
+        pending: (state) => {
           state.navigateConroller = true
+        },
+        fulfilled: (state) => {
+          state.navigateConroller = false
         },
         rejected: (state, action) => {
           state.error = action.payload
@@ -160,8 +163,11 @@ const articleSlice = createAppSlice({
           )
       },
       {
-        fulfilled: (state) => {
+        pending: (state) => {
           state.navigateConroller = true
+        },
+        fulfilled: (state) => {
+          state.navigateConroller = false
         },
         rejected: (state, action) => {
           state.error = action.payload
