@@ -1,0 +1,42 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  width: 100%;
+  font-weight: 500;
+  & a {
+    text-decoration: none;
+    color: rgba(24, 144, 255, 1);
+  }
+  &__title {
+    padding: 10px;
+    display: block;
+    font-size: 24px;
+  }
+  &__profiles {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    &__profile {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-weight: 400;
+      font-size: 24px;
+      &-image {
+        width: 2.8em;
+        height: 2.8em;
+        border-radius: 50%;
+      }
+    }
+    &-button {
+      width: 150px;
+      height: 70px !important;
+    }
+    &-buttonText {
+      font-size: 18px;
+    }
+  }
+}

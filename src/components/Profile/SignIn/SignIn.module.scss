@@ -1,0 +1,52 @@
+.form {
+  width: 400px;
+  height: 400px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: white;
+  box-shadow: 1px 1px 10px rgb(204, 204, 204);
+  border-radius: 10px;
+  padding: 30px;
+  margin-top: 80px;
+  &__title {
+    display: block;
+    align-self: center;
+    font-size: 1.5em;
+    font-weight: 500;
+  }
+  &__label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    &-input {
+      height: 2.5em;
+      border-radius: 5px;
+      border: 1px solid rgb(224, 224, 224);
+      padding-left: 10px;
+      font-size: 1.1em;
+      outline: none;
+      &:focus {
+        border-color: #228b22;
+      }
+    }
+  }
+  &__footer {
+    align-self: center;
+    font-size: 0.8em;
+    color: rgb(131, 131, 131);
+    &-link {
+      text-decoration: none;
+      color: #228b22;
+    }
+  }
+  &__submit {
+    position: absolute;
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+  }
+}

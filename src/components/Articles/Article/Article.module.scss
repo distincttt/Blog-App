@@ -1,0 +1,92 @@
+.article {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  box-shadow: 1px 1px 10px rgb(204, 204, 204);
+  border-radius: 10px;
+  background-color: white;
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    height: 50%;
+    margin-bottom: 15px;
+    &__leftSide {
+      & a {
+        display: block;
+        font-weight: 500;
+        font-size: 24px;
+        text-decoration: none;
+        color: rgba(24, 144, 255, 1);
+      }
+      &__title {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 5px;
+        &__heart {
+          &-label {
+            padding-left: 1.4em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            & input {
+              appearance: none;
+              &:checked + .article__header__leftSide__title__heart-label-checkbox {
+                background-image: url(../../../image/iconHeartActive.svg);
+                width: 1.5em;
+              }
+            }
+            &-checkbox {
+              width: 1.3em;
+              height: 1.3em;
+              margin-left: -1em;
+              background-size: cover;
+              background-image: url(../../../image/iconHeart.svg);
+            }
+          }
+        }
+        &-favoritesCount {
+          font-size: 14px;
+          font-weight: 400;
+          color: black;
+        }
+        &__tags {
+          display: flex;
+          gap: 5px;
+          font-size: 14px;
+          &-tag {
+            border: 1px solid rgb(196, 196, 196);
+            padding: 2px;
+          }
+        }
+      }
+    }
+    &__rightSide {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      &__text {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        &-name {
+          font-size: 20px;
+        }
+        &-date {
+          font-size: 14px;
+          font-weight: 300;
+        }
+      }
+      &-img {
+        width: 3.8em;
+        height: 3.8em;
+        border-radius: 50%;
+      }
+    }
+  }
+  &__description {
+    height: 50%;
+    overflow-wrap: break-word;
+  }
+}

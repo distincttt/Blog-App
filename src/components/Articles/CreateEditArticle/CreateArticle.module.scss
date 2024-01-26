@@ -1,0 +1,74 @@
+@mixin inputStyle {
+  height: 2.5em;
+  border-radius: 5px;
+  border: 1px solid rgb(224, 224, 224);
+  padding-left: 10px;
+  font-size: 1.1em;
+  outline: none;
+  &:focus {
+    border-color: #228b22;
+  }
+}
+@mixin labelStyle {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.form {
+  width: 1300px;
+  height: 800px;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 30px;
+  box-shadow: 1px 1px 10px rgb(204, 204, 204);
+  border-radius: 10px;
+  background-color: white;
+  &__title {
+    margin: 30px auto;
+    display: block;
+    font-weight: 500;
+    font-size: 24px;
+  }
+  &__label {
+    @include labelStyle;
+    &__input,
+    textarea {
+      @include inputStyle;
+      font-family: Inter;
+    }
+    & textarea {
+      height: 17em;
+      resize: none;
+    }
+    &__tags {
+      @include labelStyle;
+      &__buttons {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        &-input {
+          @include inputStyle;
+          width: 30em;
+        }
+        &-button {
+          height: 1.8em;
+        }
+      }
+      &__input-danger {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+    }
+  }
+  &__submit {
+    position: absolute;
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+  }
+}
