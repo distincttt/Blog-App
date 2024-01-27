@@ -31,6 +31,10 @@ export default function Article({ article }) {
 
   if (tagList.length > 15) tagList = tagList.slice(0, 15)
 
+  if (JSON.parse(localStorage.getItem(`${slug}`))) {
+    favorited = JSON.parse(localStorage.getItem(`${slug}`)).favoritedNew
+    favoritesCount = JSON.parse(localStorage.getItem(`${slug}`)).favoritesCountNew
+  }
   const [favoritedNew, setFavoritedNew] = useState(favorited)
   const [favoritesCountNew, setFavoritesCountNew] = useState(favoritesCount)
   const dispatch = useDispatch()
@@ -46,13 +50,6 @@ export default function Article({ article }) {
       setFavoritesCountNew(favoritesCountNew + 1)
     }
   }
-
-  useEffect(() => {
-    if (JSON.parse(localStorage.getItem(`${slug}`))) {
-      setFavoritedNew(JSON.parse(localStorage.getItem(`${slug}`)).favoritedNew)
-      setFavoritesCountNew(JSON.parse(localStorage.getItem(`${slug}`)).favoritesCountNew)
-    }
-  }, [])
 
   useEffect(() => {
     const favorite = JSON.stringify({ favoritedNew, favoritesCountNew })
