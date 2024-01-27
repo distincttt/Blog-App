@@ -34,7 +34,6 @@ export default function Article({ article }) {
   const [favoritedNew, setFavoritedNew] = useState(favorited)
   const [favoritesCountNew, setFavoritesCountNew] = useState(favoritesCount)
   const dispatch = useDispatch()
-  console.log(article)
 
   const handleChange = () => {
     if (favoritedNew) {

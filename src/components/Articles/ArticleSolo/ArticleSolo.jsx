@@ -1,7 +1,7 @@
 import { format } from 'date-fns'
 import ReactMarkdown from 'react-markdown'
 import { useDispatch } from 'react-redux'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { checkArticle, favoritedArticle, unfavoritedArticle } from '../../../Redux/articleSlice'
 
@@ -21,17 +21,34 @@ export default function ArticleSolo({ article }) {
     slug,
   } = article
 
+  const [favoritedNew, setFavoritedNew] = useState(favorited)
+  const [favoritesCountNew, setFavoritesCountNew] = useState(favoritesCount)
   const dispatch = useDispatch()
+  console.log(article)
 
   const handleChange = () => {
-    if (favorited) {
+    if (favoritedNew) {
       dispatch(unfavoritedArticle(slug))
-      favorited = false
+      setFavoritedNew(false)
+      setFavoritesCountNew(favoritesCountNew - 1)
     } else {
       dispatch(favoritedArticle(slug))
-      favorited = true
+      setFavoritedNew(true)
+      setFavoritesCountNew(favoritesCountNew + 1)
     }
   }
+
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem(`${slug}`))) {
+      setFavoritedNew(JSON.parse(localStorage.getItem(`${slug}`)).favoritedNew)
+      setFavoritesCountNew(JSON.parse(localStorage.getItem(`${slug}`)).favoritesCountNew)
+    }
+  }, [])
+
+  useEffect(() => {
+    const favorite = JSON.stringify({ favoritedNew, favoritesCountNew })
+    localStorage.setItem(`${slug}`, favorite)
+  }, [favoritedNew, favoritesCountNew])
 
   useEffect(() => {
     dispatch(checkArticle(slug))
@@ -44,9 +61,9 @@ export default function ArticleSolo({ article }) {
           <div className={classes['article__header__leftSide__title']}>
             {title}
             <label className={classes['article__header__leftSide__title__heart-label']}>
-              <input type="checkbox" onChange={handleChange} checked={favorited}></input>
+              <input type="checkbox" onChange={handleChange} checked={favoritedNew}></input>
               <span className={classes['article__header__leftSide__title__heart-label-checkbox']}></span>
-              <span className={classes['article__header__leftSide__title-favoritesCount']}>{favoritesCount}</span>
+              <span className={classes['article__header__leftSide__title-favoritesCount']}>{favoritesCountNew}</span>
             </label>
           </div>
           <div className={classes['article__header__leftSide__title__tags']}>

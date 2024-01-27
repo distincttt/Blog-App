@@ -86,6 +86,12 @@ const articleSlice = createAppSlice({
           )
       },
       {
+        pending: (state) => {
+          state.navigateConroller = true
+        },
+        fulfilled: (state) => {
+          state.navigateConroller = false
+        },
         rejected: (state, action) => {
           state.error = action.payload
         },
@@ -194,12 +200,6 @@ const articleSlice = createAppSlice({
           )
       },
       {
-        // pending: (state) => {
-        //   state.navigateConroller = true
-        // },
-        fulfilled: (_, action) => {
-          console.log(action.payload)
-        },
         rejected: (state, action) => {
           state.error = action.payload
         },
@@ -224,12 +224,6 @@ const articleSlice = createAppSlice({
           )
       },
       {
-        // pending: (state) => {
-        //   state.navigateConroller = true
-        // },
-        fulfilled: (_, action) => {
-          console.log(action.payload)
-        },
         rejected: (state, action) => {
           state.error = action.payload
         },
