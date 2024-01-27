@@ -7,14 +7,14 @@ import { deleteArticle } from '../../../Redux/articleSlice'
 import classes from './ArticleSolo.module.scss'
 
 export default function ArticleSoloButtons({ slug }) {
-  const { deleteSuccess, navigateConroller } = useSelector((state) => state.articleSlice)
+  const { deleteSuccess } = useSelector((state) => state.articleSlice)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const confirm = () => {
-    message.success('Click on Yes')
-    dispatch(deleteArticle(slug))
-    if (navigateConroller) navigate(-1)
+  const confirm = async () => {
+    await message.success('Click on Yes')
+    await dispatch(deleteArticle(slug))
+    await navigate(-1)
   }
   const cancel = () => {
     message.error('Click on No')
