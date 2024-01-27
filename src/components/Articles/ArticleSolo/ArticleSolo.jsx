@@ -3,13 +3,13 @@ import ReactMarkdown from 'react-markdown'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 
-import { checkArticle } from '../../../Redux/articleSlice'
+import { checkArticle, favoritedArticle, unfavoritedArticle } from '../../../Redux/articleSlice'
 
 import classes from './ArticleSolo.module.scss'
 import ArticleSoloButtons from './ArticleSoloButtons'
 
 export default function ArticleSolo({ article }) {
-  const {
+  let {
     author: { username, image },
     title,
     description,
@@ -21,9 +21,18 @@ export default function ArticleSolo({ article }) {
     slug,
   } = article
 
-  //Сделать EditArticle полностью
-
   const dispatch = useDispatch()
+
+  const handleChange = () => {
+    if (favorited) {
+      dispatch(unfavoritedArticle(slug))
+      favorited = false
+    } else {
+      dispatch(favoritedArticle(slug))
+      favorited = true
+    }
+  }
+
   useEffect(() => {
     dispatch(checkArticle(slug))
   }, [slug])
@@ -35,7 +44,7 @@ export default function ArticleSolo({ article }) {
           <div className={classes['article__header__leftSide__title']}>
             {title}
             <label className={classes['article__header__leftSide__title__heart-label']}>
-              <input type="checkbox" onChange={() => {}} checked={favorited}></input>
+              <input type="checkbox" onChange={handleChange} checked={favorited}></input>
               <span className={classes['article__header__leftSide__title__heart-label-checkbox']}></span>
               <span className={classes['article__header__leftSide__title-favoritesCount']}>{favoritesCount}</span>
             </label>

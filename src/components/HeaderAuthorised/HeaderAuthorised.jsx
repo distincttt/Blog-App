@@ -16,7 +16,7 @@ export default function HeaderAuthorised() {
   const logOut = () => {
     dispatch(clearNavigateConroller())
     dispatch(userDelete())
-    localStorage.removeItem('user')
+    localStorage.clear()
   }
   return (
     <div className={classes.header}>

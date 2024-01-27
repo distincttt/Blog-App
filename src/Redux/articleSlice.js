@@ -146,13 +146,14 @@ const articleSlice = createAppSlice({
     updateArticle: create.asyncThunk(
       async (articleNew, { rejectWithValue }) => {
         const token = JSON.parse(localStorage.getItem('user')).user.token
+        const article = { article: articleNew.article }
         const response = await fetch(`https://blog.kata.academy/api/articles/${articleNew.slug}`, {
           method: 'PUT',
           headers: {
             Authorization: `Token ${token}`,
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(articleNew.article),
+          body: JSON.stringify(article),
         })
         if (response.ok) {
           let res = await response.json()
@@ -174,6 +175,66 @@ const articleSlice = createAppSlice({
         },
       }
     ),
+    favoritedArticle: create.asyncThunk(
+      async (slug, { rejectWithValue }) => {
+        const token = JSON.parse(localStorage.getItem('user')).user.token
+        const response = await fetch(`https://blog.kata.academy/api/articles/${slug}/favorite`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Token ${token}`,
+            'Content-Type': 'application/json',
+          },
+        })
+        if (response.ok) {
+          let res = await response.json()
+          return res
+        } else
+          return rejectWithValue(
+            `Could not fetch https://blog.kata.academy/api/articles${slug}, response status: ${response.status} , please wait...`
+          )
+      },
+      {
+        // pending: (state) => {
+        //   state.navigateConroller = true
+        // },
+        fulfilled: (_, action) => {
+          console.log(action.payload)
+        },
+        rejected: (state, action) => {
+          state.error = action.payload
+        },
+      }
+    ),
+    unfavoritedArticle: create.asyncThunk(
+      async (slug, { rejectWithValue }) => {
+        const token = JSON.parse(localStorage.getItem('user')).user.token
+        const response = await fetch(`https://blog.kata.academy/api/articles/${slug}/favorite`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Token ${token}`,
+            'Content-Type': 'application/json',
+          },
+        })
+        if (response.ok) {
+          let res = await response.json()
+          return res
+        } else
+          return rejectWithValue(
+            `Could not fetch https://blog.kata.academy/api/articles${slug}, response status: ${response.status} , please wait...`
+          )
+      },
+      {
+        // pending: (state) => {
+        //   state.navigateConroller = true
+        // },
+        fulfilled: (_, action) => {
+          console.log(action.payload)
+        },
+        rejected: (state, action) => {
+          state.error = action.payload
+        },
+      }
+    ),
   }),
 })
 
@@ -185,6 +246,8 @@ export const {
   createArticle,
   checkArticle,
   updateArticle,
+  favoritedArticle,
+  unfavoritedArticle,
 } = articleSlice.actions
 
 export default articleSlice.reducer
