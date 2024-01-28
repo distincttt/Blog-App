@@ -14,7 +14,6 @@ const articleSlice = createAppSlice({
     article: {},
     deleteSuccess: false,
     checkUser: '',
-    navigateConroller: false,
   },
   reducers: (create) => ({
     fetchArticles: create.asyncThunk(
@@ -109,12 +108,6 @@ const articleSlice = createAppSlice({
           )
       },
       {
-        pending: (state) => {
-          state.navigateConroller = true
-        },
-        fulfilled: (state) => {
-          state.navigateConroller = false
-        },
         rejected: (state, action) => {
           state.error = action.payload
         },
@@ -135,7 +128,7 @@ const articleSlice = createAppSlice({
       },
       {
         fulfilled: (state, action) => {
-          if (action.payload === JSON.parse(localStorage.getItem('user')).user.username) state.deleteSuccess = true
+          if (action.payload === JSON.parse(localStorage.getItem('user'))?.user.username) state.deleteSuccess = true
           else state.deleteSuccess = false
         },
         rejected: (state, action) => {
@@ -164,12 +157,6 @@ const articleSlice = createAppSlice({
           )
       },
       {
-        pending: (state) => {
-          state.navigateConroller = true
-        },
-        fulfilled: (state) => {
-          state.navigateConroller = false
-        },
         rejected: (state, action) => {
           state.error = action.payload
         },

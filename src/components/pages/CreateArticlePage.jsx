@@ -1,11 +1,12 @@
 import HeaderAuthorised from '../HeaderAuthorised/HeaderAuthorised'
-import CreateArticle from '../Articles/CreateEditArticle/CreateArticle'
+import CreateEditArticle from '../Articles/CreateEditArticle/CreateEditArticle'
+import { createArticle } from '../../Redux/articleSlice'
 
 export default function CreateArticlePage() {
   return (
     <>
       <HeaderAuthorised />
-      <CreateArticle />
+      <CreateEditArticle pageEditArticle={false} createArticle={createArticle} handleChange={() => {}} />
     </>
   )
 }

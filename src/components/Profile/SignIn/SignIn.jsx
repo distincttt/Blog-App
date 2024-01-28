@@ -2,7 +2,6 @@ import { Button } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
 
 import { emailValidation, requiredValidation } from '../Validation'
 import { userLogin, clearServerErrors } from '../../../Redux/profileSlice'
@@ -16,19 +15,15 @@ export default function SignIn() {
     formState: { errors, isValid },
   } = useForm({ mode: 'onBlur' })
 
-  const { navigateConroller, serverErrors } = useSelector((state) => state.profileSlice)
+  const { serverErrors } = useSelector((state) => state.profileSlice)
   const navigate = useNavigate()
 
   const dispatch = useDispatch()
-  const onSubmit = (data) => {
-    dispatch(userLogin(data))
+  const onSubmit = async (data) => {
+    await dispatch(userLogin(data))
+    navigate(-1)
   }
 
-  useEffect(() => {
-    if (navigateConroller) {
-      navigate(-1)
-    }
-  }, [navigateConroller])
   return (
     <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
       <title className={classes['form__title']}>Sign In</title>

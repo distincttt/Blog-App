@@ -1,13 +1,20 @@
-import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
 import { useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 
 import { favoritedArticle, unfavoritedArticle } from '../../../Redux/articleSlice'
 
-import classes from './Article.module.scss'
-
-export default function Article({ article }) {
+export default function Article({
+  article,
+  classes,
+  pageArticleSolo,
+  Link,
+  checkArticle,
+  textSplice,
+  ArticleSoloButtons,
+  ReactMarkdown,
+  body,
+}) {
   let {
     author: { username, image },
     title,
@@ -18,18 +25,6 @@ export default function Article({ article }) {
     createdAt,
     slug,
   } = article
-
-  const textSplice = (text, maxLength) => {
-    if (text) {
-      if (text.length < maxLength) return text
-      else {
-        text = text.slice(0, maxLength)
-        return `${text} ...`
-      }
-    }
-  }
-
-  if (tagList.length > 15) tagList = tagList.slice(0, 15)
 
   if (JSON.parse(localStorage.getItem(`${slug}`))) {
     favorited = JSON.parse(localStorage.getItem(`${slug}`)).favoritedNew
@@ -56,12 +51,18 @@ export default function Article({ article }) {
     localStorage.setItem(`${slug}`, favorite)
   }, [favoritedNew, favoritesCountNew])
 
+  if (pageArticleSolo) {
+    useEffect(() => {
+      dispatch(checkArticle(slug))
+    }, [slug])
+  }
+
   return (
     <div className={classes.article}>
       <div className={classes['article__header']}>
         <div className={classes['article__header__leftSide']}>
           <div className={classes['article__header__leftSide__title']}>
-            <Link to={`article/${slug}`}>{textSplice(title, 80)}</Link>
+            {pageArticleSolo ? title : <Link to={`article/${slug}`}>{textSplice(title, 80)}</Link>}
             <label className={classes['article__header__leftSide__title__heart-label']}>
               <input type="checkbox" onChange={handleChange} checked={favoritedNew}></input>
               <span className={classes['article__header__leftSide__title__heart-label-checkbox']}></span>
@@ -79,16 +80,40 @@ export default function Article({ article }) {
           </div>
         </div>
         <div className={classes['article__header__rightSide']}>
-          <div className={classes['article__header__rightSide__text']}>
-            <span className={classes['article__header__rightSide__text-name']}>{username}</span>
-            <span className={classes['article__header__rightSide__text-date']}>
-              {format(new Date(createdAt), 'PP')}
-            </span>
-          </div>
-          <img src={image} className={classes['article__header__rightSide-img']}></img>
+          {pageArticleSolo ? (
+            <>
+              <div className={classes['article__header__rightSide__up']}>
+                <div className={classes['article__header__rightSide__up__text']}>
+                  <span className={classes['article__header__rightSide__up__text-name']}>{username}</span>
+                  <span className={classes['article__header__rightSide__up__text-date']}>
+                    {format(new Date(createdAt), 'PP')}
+                  </span>
+                </div>
+                <img src={image} className={classes['article__header__rightSide__up-img']}></img>
+              </div>
+              <ArticleSoloButtons slug={slug} />
+            </>
+          ) : (
+            <>
+              <div className={classes['article__header__rightSide__text']}>
+                <span className={classes['article__header__rightSide__text-name']}>{username}</span>
+                <span className={classes['article__header__rightSide__text-date']}>
+                  {format(new Date(createdAt), 'PP')}
+                </span>
+              </div>
+              <img src={image} className={classes['article__header__rightSide-img']}></img>
+            </>
+          )}
         </div>
       </div>
-      <div className={classes['article__description']}>{textSplice(description, 270)}</div>
+      <div className={classes['article__description']}>
+        {pageArticleSolo ? description : textSplice(description, 270)}
+      </div>
+      {pageArticleSolo && (
+        <div className={classes['article__body']}>
+          <ReactMarkdown>{body}</ReactMarkdown>
+        </div>
+      )}
     </div>
   )
 }

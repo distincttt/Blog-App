@@ -1,6 +1,6 @@
 import { Button } from 'antd'
 
-import classes from './CreateArticle.module.scss'
+import classes from './CreateEditArticle.module.scss'
 
 export default function Tag({ tags, setTags, id }) {
   const handleChange = (i, e) => {

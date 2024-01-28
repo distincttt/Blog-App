@@ -1,26 +1,44 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import ReactMarkdown from 'react-markdown'
 
-import { fetchArticleBySlug } from '../../Redux/articleSlice'
-import ArticleSolo from '../Articles/ArticleSolo/ArticleSolo'
+import { fetchArticleBySlug, checkArticle } from '../../Redux/articleSlice'
 import Header from '../Header/Header'
 import HeaderAuthorised from '../HeaderAuthorised/HeaderAuthorised'
 import useAuth from '../../hoc/useAuth'
+import Article from '../Articles/Article/Article'
+import ArticleSoloButtons from '../Articles/ArticleSolo/ArticleSoloButtons'
+import classes from '../Articles/ArticleSolo/ArticleSolo.module.scss'
 
 export default function ArticlePage() {
   const { article } = useSelector((state) => state.articleSlice)
+  const { body } = article
   const { slug } = useParams()
   const authorized = useAuth()
-
+  let [awaitSLug, setAwaitSLug] = useState(false)
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchArticleBySlug(slug))
+    setAwaitSLug(0)
   }, [])
+  useEffect(() => {
+    if (awaitSLug === 0) setAwaitSLug(true)
+  }, [article])
   return (
     <>
       {authorized ? <HeaderAuthorised /> : <Header />}
-      {Object.keys(article).length && <ArticleSolo article={article} />}
+      {awaitSLug && (
+        <Article
+          article={article}
+          classes={classes}
+          pageArticleSolo={true}
+          checkArticle={checkArticle}
+          ArticleSoloButtons={ArticleSoloButtons}
+          ReactMarkdown={ReactMarkdown}
+          body={body}
+        />
+      )}
     </>
   )
 }

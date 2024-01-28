@@ -2,7 +2,6 @@ import { Button } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
 
 import {
   usernameValidation,
@@ -23,20 +22,15 @@ export default function SignUp() {
     getValues,
   } = useForm({ mode: 'onBlur' })
 
-  const { navigateConroller, serverErrors } = useSelector((state) => state.profileSlice)
+  const { serverErrors } = useSelector((state) => state.profileSlice)
 
   const navigate = useNavigate()
 
   const dispatch = useDispatch()
-  const onSubmit = (data) => {
-    dispatch(userRegister(data))
+  const onSubmit = async (data) => {
+    await dispatch(userRegister(data))
+    navigate(-1)
   }
-
-  useEffect(() => {
-    if (navigateConroller) {
-      navigate(-1)
-    }
-  }, [navigateConroller])
 
   return (
     <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>

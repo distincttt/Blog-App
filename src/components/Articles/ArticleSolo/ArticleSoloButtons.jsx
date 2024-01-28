@@ -12,9 +12,9 @@ export default function ArticleSoloButtons({ slug }) {
   const dispatch = useDispatch()
 
   const confirm = async () => {
-    await message.success('Click on Yes')
+    message.success('Click on Yes')
     await dispatch(deleteArticle(slug))
-    await navigate(-1)
+    navigate(-1)
   }
   const cancel = () => {
     message.error('Click on No')

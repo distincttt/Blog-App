@@ -6,7 +6,7 @@ const createAppSlice = buildCreateSlice({
 
 const profileSlice = createAppSlice({
   name: 'profile',
-  initialState: { user: {}, authorized: false, navigateConroller: false, serverErrors: {} },
+  initialState: { user: {}, authorized: false, serverErrors: {} },
   reducers: (create) => ({
     userSave: create.reducer((state, action) => {
       state.user = action.payload
@@ -18,9 +18,6 @@ const profileSlice = createAppSlice({
     }),
     clearServerErrors: create.reducer((state, action) => {
       state.serverErrors[action.payload] = null
-    }),
-    clearNavigateConroller: create.reducer((state) => {
-      state.navigateConroller = false
     }),
     userRegister: create.asyncThunk(
       async (userData, { dispatch }) => {
@@ -45,7 +42,6 @@ const profileSlice = createAppSlice({
       {
         fulfilled: (state) => {
           state.serverErrors = {}
-          state.navigateConroller = true
           state.authorized = true
         },
         rejected: (state, action) => {
@@ -81,7 +77,6 @@ const profileSlice = createAppSlice({
         fulfilled: (state, action) => {
           state.user = action.payload.user
           state.serverErrors = {}
-          state.navigateConroller = true
           state.authorized = true
         },
         rejected: (state, action) => {
@@ -127,7 +122,6 @@ const profileSlice = createAppSlice({
   }),
 })
 
-export const { userSave, userDelete, userRegister, userLogin, clearServerErrors, clearNavigateConroller, userUpdate } =
-  profileSlice.actions
+export const { userSave, userDelete, userRegister, userLogin, clearServerErrors, userUpdate } = profileSlice.actions
 
 export default profileSlice.reducer
