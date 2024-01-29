@@ -1,7 +1,6 @@
 import { Spin } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 
 import classesArticle from '../Article/Article.module.scss'
 import Article from '../Article/Article'
@@ -34,7 +33,6 @@ export default function ListArticles() {
               article={article}
               classes={classesArticle}
               pageArticleSolo={false}
-              Link={Link}
               textSplice={textSplice}
             />
           )

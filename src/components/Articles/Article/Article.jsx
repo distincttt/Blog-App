@@ -2,11 +2,12 @@ import { format } from 'date-fns'
 import { useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
+import { Link } from 'react-router-dom'
 
 import ArticleSoloButtons from '../ArticleSolo/ArticleSoloButtons'
 import { favoritedArticle, unfavoritedArticle } from '../../../Redux/articleSlice'
 
-export default function Article({ article, classes, pageArticleSolo, Link, textSplice, body }) {
+export default function Article({ article, classes, pageArticleSolo, textSplice, body }) {
   let {
     author: { username, image },
     title,
