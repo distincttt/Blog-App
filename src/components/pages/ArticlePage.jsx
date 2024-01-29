@@ -20,7 +20,7 @@ export default function ArticlePage() {
     dispatch(fetchArticleBySlug(slug))
   }, [])
   useEffect(() => {
-    if (article.slug === slug) setAwaitSLug(true)
+    return () => setAwaitSLug(true)
   }, [article])
   return (
     <>
