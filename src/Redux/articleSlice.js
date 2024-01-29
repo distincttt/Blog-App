@@ -12,8 +12,6 @@ const articleSlice = createAppSlice({
     error: false,
     totalArticles: null,
     article: {},
-    deleteSuccess: false,
-    checkUser: '',
   },
   reducers: (create) => ({
     fetchArticles: create.asyncThunk(
@@ -113,29 +111,6 @@ const articleSlice = createAppSlice({
         },
       }
     ),
-    checkArticle: create.asyncThunk(
-      async (slug, { rejectWithValue }) => {
-        const response = await fetch(`https://blog.kata.academy/api/articles/${slug}`, {
-          method: 'GET',
-        })
-        if (response.ok) {
-          let res = await response.json()
-          return res.article.author.username
-        } else
-          return rejectWithValue(
-            `Could not fetch https://blog.kata.academy/api/articles, response status: ${response.status} , please wait...`
-          )
-      },
-      {
-        fulfilled: (state, action) => {
-          if (action.payload === JSON.parse(localStorage.getItem('user'))?.user.username) state.deleteSuccess = true
-          else state.deleteSuccess = false
-        },
-        rejected: (state, action) => {
-          state.error = action.payload
-        },
-      }
-    ),
     updateArticle: create.asyncThunk(
       async (articleNew, { rejectWithValue }) => {
         const token = JSON.parse(localStorage.getItem('user')).user.token
@@ -219,7 +194,6 @@ export const {
   fetchArticleBySlug,
   deleteArticle,
   createArticle,
-  checkArticle,
   updateArticle,
   favoritedArticle,
   unfavoritedArticle,

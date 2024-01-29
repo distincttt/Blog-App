@@ -1,20 +1,12 @@
 import { format } from 'date-fns'
 import { useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
+import ReactMarkdown from 'react-markdown'
 
+import ArticleSoloButtons from '../ArticleSolo/ArticleSoloButtons'
 import { favoritedArticle, unfavoritedArticle } from '../../../Redux/articleSlice'
 
-export default function Article({
-  article,
-  classes,
-  pageArticleSolo,
-  Link,
-  checkArticle,
-  textSplice,
-  ArticleSoloButtons,
-  ReactMarkdown,
-  body,
-}) {
+export default function Article({ article, classes, pageArticleSolo, Link, textSplice, body }) {
   let {
     author: { username, image },
     title,
@@ -25,6 +17,9 @@ export default function Article({
     createdAt,
     slug,
   } = article
+
+  let userCheck = false
+  if (username === JSON.parse(localStorage.getItem('user')).user.username) userCheck = true
 
   if (JSON.parse(localStorage.getItem(`${slug}`))) {
     favorited = JSON.parse(localStorage.getItem(`${slug}`)).favoritedNew
@@ -50,12 +45,6 @@ export default function Article({
     const favorite = JSON.stringify({ favoritedNew, favoritesCountNew })
     localStorage.setItem(`${slug}`, favorite)
   }, [favoritedNew, favoritesCountNew])
-
-  if (pageArticleSolo) {
-    useEffect(() => {
-      dispatch(checkArticle(slug))
-    }, [slug])
-  }
 
   return (
     <div className={classes.article}>
@@ -91,7 +80,7 @@ export default function Article({
                 </div>
                 <img src={image} className={classes['article__header__rightSide__up-img']}></img>
               </div>
-              <ArticleSoloButtons slug={slug} />
+              {userCheck && <ArticleSoloButtons slug={slug} />}
             </>
           ) : (
             <>

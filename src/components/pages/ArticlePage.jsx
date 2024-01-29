@@ -1,14 +1,12 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import ReactMarkdown from 'react-markdown'
 
-import { fetchArticleBySlug, checkArticle } from '../../Redux/articleSlice'
+import { fetchArticleBySlug } from '../../Redux/articleSlice'
 import Header from '../Header/Header'
 import HeaderAuthorised from '../HeaderAuthorised/HeaderAuthorised'
 import useAuth from '../../hoc/useAuth'
 import Article from '../Articles/Article/Article'
-import ArticleSoloButtons from '../Articles/ArticleSolo/ArticleSoloButtons'
 import classes from '../Articles/ArticleSolo/ArticleSolo.module.scss'
 
 export default function ArticlePage() {
@@ -28,17 +26,7 @@ export default function ArticlePage() {
   return (
     <>
       {authorized ? <HeaderAuthorised /> : <Header />}
-      {awaitSLug && (
-        <Article
-          article={article}
-          classes={classes}
-          pageArticleSolo={true}
-          checkArticle={checkArticle}
-          ArticleSoloButtons={ArticleSoloButtons}
-          ReactMarkdown={ReactMarkdown}
-          body={body}
-        />
-      )}
+      {awaitSLug && <Article article={article} classes={classes} pageArticleSolo={true} body={body} />}
     </>
   )
 }
