@@ -21,7 +21,8 @@ export default function SignIn() {
   const dispatch = useDispatch()
   const onSubmit = async (data) => {
     await dispatch(userLogin(data))
-    navigate(-1)
+    console.log(JSON.parse(localStorage.getItem('user'))?.user)
+    if (JSON.parse(localStorage.getItem('user'))?.user) navigate(-1)
   }
 
   return (

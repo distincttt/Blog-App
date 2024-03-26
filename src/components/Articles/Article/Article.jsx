@@ -20,7 +20,7 @@ export default function Article({ article, classes, pageArticleSolo, textSplice,
   } = article
 
   let userCheck = false
-  if (username === JSON.parse(localStorage.getItem('user')).user.username) userCheck = true
+  if (username === JSON.parse(localStorage.getItem('user'))?.user.username) userCheck = true
 
   if (JSON.parse(localStorage.getItem(`${slug}`))) {
     favorited = JSON.parse(localStorage.getItem(`${slug}`)).favoritedNew
